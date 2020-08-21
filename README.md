@@ -4,7 +4,7 @@ Work in progress
 
 A script for tidying up your downloads folder. You can run the file from anywhere.
 
-    $ python [...]\move_files.py"
+    $ python [...]/cleanup.py"
     Clean up your downloads folder
     Moved   bits to do.txt                                         to      C:/Users/Edward/Downloads/text
     Moved   Edward Horsey CV.pdf                                   to      C:/Users/Edward/Downloads/text

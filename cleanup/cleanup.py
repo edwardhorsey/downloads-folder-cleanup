@@ -5,7 +5,7 @@ from file_entensions import extension_paths
 print('Clean up your downloads folder')
 folder_to_track = f'C:/Users/{os.getlogin()}/Downloads/'
 
-def move():
+def cleanup():
     log = []
     for name in os.listdir(folder_to_track):
         if os.path.isfile(folder_to_track + name):
@@ -28,4 +28,4 @@ def move():
     print('\n'.join(log)) if len(log) > 0 else print('No files were moved')
     print('End')
 
-move()
+cleanup()
