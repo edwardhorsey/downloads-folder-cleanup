@@ -2,7 +2,7 @@
 
 Work in progress
 
-A script for tidying up your downloads folder. You can run the file from anywhere. Edit the 
+A script for tidying up your downloads folder. You can run the file from anywhere.
 
     $ python [...]\move_files.py"
     Clean up your downloads folder
