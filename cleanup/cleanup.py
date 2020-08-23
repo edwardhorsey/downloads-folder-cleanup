@@ -70,5 +70,5 @@ class Handler(FileSystemEventHandler):
 if __name__ == '__main__':
     watcher = Watcher()
     print('Clean up your downloads folder')
-    print('Press Ctrl-C to stop watching')
+    print('Watching... Press Ctrl-C to stop')
     watcher.run()
