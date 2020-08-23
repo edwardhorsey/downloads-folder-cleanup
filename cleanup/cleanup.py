@@ -7,11 +7,10 @@ from watchdog.events import FileSystemEventHandler
 from file_entensions import extension_paths
 
 class Watcher:
-    folder_to_track = f'C:/Users/{os.getlogin()}/Downloads/'
-
     def __init__(self):
         self.observer = Observer()
         self.log = self.start_log()
+        self.folder_to_track = f'C:/Users/{os.getlogin()}/Downloads/'
 
     def start_log(self):
         begin = time.strftime(f"%d/%m/%Y %H:%M:%S", time.localtime())
@@ -30,7 +29,7 @@ class Watcher:
                 time.sleep(10)
         except KeyboardInterrupt:
             self.observer.stop()
-            print("Stopped by user\n")
+            print("Stopping... \n")
             if len(self.log) < 3:
                 self.log.append('No files were moved')
             self.end_log()
@@ -38,16 +37,15 @@ class Watcher:
             print('End')
         self.observer.join()
 
-
     def cleanup(self, file_path):
         if os.path.isfile(file_path):
-            
+
             name = file_path.split("/")[-1]
             file_type = '.' + name.lower().split(".")[-1]
             new_destination = self.folder_to_track + extension_paths[file_type]
+            new_name = name
 
             Path(new_destination).mkdir(parents=True, exist_ok=True)
-            new_name = name
             x = 1
             while os.path.exists(os.path.join(new_destination, new_name)):
                 new_name = name[:(len(name) - len(file_type))] + f' - Copy ({x})' + file_type
@@ -57,22 +55,20 @@ class Watcher:
                       os.path.join(new_destination, new_name))
 
             self.log.append('{:<9}{:<60}{:<9}{:<60}'.format('Moved', new_name, 'to', new_destination))
+            print(f'Moved {name}')
 
 class Handler(FileSystemEventHandler):
-
     @staticmethod
     def on_any_event(event):
         if event.is_directory:
             return None
-
         elif event.event_type == 'created':
-            w.cleanup(event.src_path)
-
+            watcher.cleanup(event.src_path)
         elif event.event_type == 'modified':
-            w.cleanup(event.src_path)
+            watcher.cleanup(event.src_path)
 
 if __name__ == '__main__':
-    w = Watcher()
+    watcher = Watcher()
     print('Clean up your downloads folder')
     print('Press Ctrl-C to stop watching')
-    w.run()
+    watcher.run()
