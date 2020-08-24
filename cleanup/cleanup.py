@@ -21,6 +21,7 @@ class Watcher:
         self.log.append(f"Finish: {end}")
 
     def run(self):
+        self.initial()
         event_handler = Handler()
         self.observer.schedule(event_handler, self.folder_to_track, recursive=False)
         self.observer.start()
@@ -36,6 +37,11 @@ class Watcher:
             print('\n'.join(self.log))
             print('End')
         self.observer.join()
+
+    def initial(self):
+        for name in os.listdir(self.folder_to_track):
+            if os.path.isfile(self.folder_to_track + name):
+                self.cleanup(self.folder_to_track + name)
 
     def cleanup(self, file_path):
         if os.path.isfile(file_path):
