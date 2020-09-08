@@ -3,7 +3,6 @@ import time
 from pathlib import Path
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-
 from file_entensions import extension_paths
 
 class Watcher:
@@ -26,7 +25,7 @@ class Watcher:
         self.observer.schedule(event_handler, self.folder_to_track, recursive=False)
         self.observer.start()
         try:
-            while True:
+            while 1:
                 time.sleep(10)
         except KeyboardInterrupt:
             self.observer.stop()
@@ -74,7 +73,7 @@ class Handler(FileSystemEventHandler):
             watcher.cleanup(event.src_path)
 
 if __name__ == '__main__':
-    watcher = Watcher()
     print('Clean up your downloads folder')
     print('Watching... Press Ctrl-C to stop')
+    watcher = Watcher()
     watcher.run()
